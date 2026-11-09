@@ -1,0 +1,34 @@
+# ------------------------------------------------------------
+# Only the website itself is committed:
+#   index.html, styles.css, main.js, Sungwon_Yoon_Resume.pdf,
+#   README.md, .gitignore, .nojekyll
+# Everything below stays on this computer and is never pushed.
+# ------------------------------------------------------------
+
+# Private resumes / CVs: only the public copy (no phone or address) is allowed
+*.pdf
+!Sungwon_Yoon_Resume.pdf
+*.docx
+*.doc
+*.tex
+
+# Drafts, notes and anything private you drop into this folder
+private/
+drafts/
+notes/
+*.bak
+*.tmp
+*.tmp.*
+
+# Operating-system files (Windows / OneDrive / macOS)
+desktop.ini
+Thumbs.db
+ehthumbs.db
+.DS_Store
+~$*
+
+# Editor and tool folders
+.vscode/
+.idea/
+.claude/
+*.swp
