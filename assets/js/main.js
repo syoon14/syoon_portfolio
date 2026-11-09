@@ -1,10 +1,20 @@
+/*
+ * Sungwon Yoon, Ph.D. · personal website · behavior
+ *
+ *  - Theme toggle: switches light/dark and remembers the choice
+ *  - Mobile menu: the sidebar becomes a drop-down below 960px
+ *  - Navigation: highlights the section currently on screen
+ *  - Publications: fixed numbering and the All / First-author filter
+ *
+ * Plain JavaScript with no dependencies.
+ */
 (function () {
   'use strict';
 
   var root = document.documentElement;
   var mqDark = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
 
-  /* ---------- theme ---------- */
+  /* Theme toggle: flip light/dark and save the choice (see the inline script in index.html). */
   function currentTheme() {
     var set = root.getAttribute('data-theme');
     if (set) return set;
@@ -18,7 +28,7 @@
     });
   });
 
-  /* ---------- mobile menu ---------- */
+  /* Mobile menu: open/close the sidebar panel; close it after a link is chosen or on Escape. */
   var panel = document.getElementById('side-panel');
   var menuBtn = document.getElementById('menu-toggle');
   function setMenu(open) {
@@ -30,7 +40,7 @@
   panel.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
 
-  /* ---------- active section in nav ---------- */
+  /* Navigation: mark the section that is 30% down the screen as active. */
   var links = Array.prototype.slice.call(document.querySelectorAll('.side-nav a'));
   var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
   function onScroll() {
@@ -48,7 +58,8 @@
   window.addEventListener('resize', onScroll);
   onScroll();
 
-  /* ---------- publications: fixed numbering + filter ---------- */
+  /* Publications: number papers from oldest (01) to newest, then wire up the filter.
+     Numbers stay fixed when the filter hides papers. */
   var pubs = Array.prototype.slice.call(document.querySelectorAll('.pubs li'));
   pubs.forEach(function (li, i) {
     var n = pubs.length - i;

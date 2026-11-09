@@ -1,4 +1,10 @@
 <!doctype html>
+<!--
+  Sungwon Yoon, Ph.D. · personal website
+  Single-page static site. Content lives in this file; styles are in
+  assets/css/styles.css and behavior (theme toggle, mobile menu,
+  publication filter) is in assets/js/main.js.
+-->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -12,7 +18,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <!-- Bump ?v= after editing the stylesheet so browsers load the new version. -->
+  <link rel="stylesheet" href="assets/css/styles.css?v=5">
+  <!-- Apply the saved light/dark choice before the page paints (prevents a flash). -->
   <script>
     try { var t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
   </script>
@@ -45,7 +53,7 @@
         swyoon6@gmail.com
       </a>
       <div class="side-links">
-        <a class="btn btn-ghost" href="Sungwon_Yoon_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+        <a class="btn btn-ghost" href="assets/Sungwon_Yoon_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
         <a class="btn btn-ghost" href="https://scholar.google.com/citations?user=PnmH8BoAAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a>
       </div>
 
@@ -70,7 +78,7 @@
   </aside>
 
   <main id="main">
-    <!-- ============ INTRO ============ -->
+    <!-- ============ INTRO: name, bio, spec sheet ============ -->
     <section class="intro" id="top">
       <div class="intro-grid">
         <div class="intro-text">
@@ -86,7 +94,7 @@
           <div class="cta-row">
             <a class="btn btn-primary" href="mailto:swyoon6@gmail.com">Get in touch</a>
             <a class="btn btn-ghost" href="#skills">See skills</a>
-            <a class="btn btn-ghost" href="Sungwon_Yoon_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+            <a class="btn btn-ghost" href="assets/Sungwon_Yoon_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
           </div>
         </div>
 
@@ -334,6 +342,8 @@
       <div class="pub-head mono" aria-hidden="true">
         <span>No.</span><span>Year</span><span>Title · Authors · Source</span><span>Link</span>
       </div>
+      <!-- Newest first. data-year fills the Year column and data-first="true" marks
+           first-author papers for the filter. Numbers are added by main.js. -->
       <ol class="pubs" reversed>
         <li data-first="false" data-year="2026">
           <div class="pub-main">
@@ -450,7 +460,7 @@
       </ol>
     </section>
 
-    <!-- ============ TALKS & AWARDS ============ -->
+    <!-- ============ PRESENTATIONS & AWARDS ============ -->
     <section class="section" id="talks">
       <div class="two-col">
         <div>
@@ -524,11 +534,11 @@
           </div>
           <div>
             <dt class="mono">Resume</dt>
-            <dd><a class="contact-link" href="Sungwon_Yoon_Resume.pdf" target="_blank" rel="noopener">Download resume (PDF)</a></dd>
+            <dd><a class="contact-link" href="assets/Sungwon_Yoon_Resume.pdf" target="_blank" rel="noopener">Download resume (PDF)</a></dd>
           </div>
-          <!-- Add more profile links here when ready, e.g.:
-          <div><dt class="mono">ORCID</dt><dd><a href="https://orcid.org/0000-0000-0000-0000">ORCID</a></dd></div>
-          <div><dt class="mono">LinkedIn</dt><dd><a href="https://www.linkedin.com/in/XXXX">LinkedIn</a></dd></div>
+          <!-- Optional profile rows: replace the links and remove the comment markers to show them.
+          <div><dt class="mono">ORCID</dt><dd><a class="contact-link" href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener">ORCID</a></dd></div>
+          <div><dt class="mono">LinkedIn</dt><dd><a class="contact-link" href="https://www.linkedin.com/in/your-profile" target="_blank" rel="noopener">LinkedIn</a></dd></div>
           -->
         </dl>
       </div>
@@ -540,6 +550,6 @@
     </footer>
   </main>
 
-  <script src="main.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>

@@ -1,9 +1,39 @@
 /* ============================================================
-   Design B — "Datasheet" (light) / neon (dark)
-   Tokens on :root; dark mode swaps the tokens. Glow tokens are "none" in light.
+   Sungwon Yoon, Ph.D. · personal website · styles
+   ------------------------------------------------------------
+   Light theme: cobalt "datasheet" look.
+   Dark theme:  neon (cyan and magenta glow).
+
+   Every color is a CSS custom property ("token") defined on :root.
+   The dark theme only swaps token values, so each rule below works
+   in both themes. The glow tokens are "none" in light mode, which is
+   why the neon effects appear only in dark mode.
+
+   Contents
+     0. Design tokens (light, then dark)
+     1. Base
+     2. Buttons and icons
+     3. Sidebar (top bar on small screens)
+     4. Main column
+     5. Intro: graph-paper header and spec sheet
+     6. Section headings
+     7. Skills (element tiles)
+     8. Experience and education
+     9. Research projects
+    10. Publications
+    11. Presentations and awards
+    12. Contact
+    13. Footer
+    14. Neon glow (dark mode)
+    15. Print
    ============================================================ */
 
+/* ------------------------------------------------------------
+   0. Design tokens
+   ------------------------------------------------------------ */
+
 :root {
+  /* Colors (light theme) */
   --bg: #f4f5f8;
   --surface: #ffffff;
   --surface-2: #eef0f5;
@@ -17,6 +47,8 @@
   --accent-soft: #e7edfc;
   --grid-minor: rgba(31, 79, 209, 0.06);
   --grid-major: rgba(31, 79, 209, 0.11);
+
+  /* Neon-only tokens: neutral values here, so light mode is unaffected */
   --accent-2: #1f4fd1;
   --rule-strong: var(--ink);
   --rule-bg: var(--line-strong);
@@ -31,15 +63,21 @@
   --glow-2-text: none;
   --side-glow: none;
 
+  /* Typography */
   --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Malgun Gothic", sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
 
+  /* Layout */
   --side-w: 300px;
   --bar-h: 60px;
   --r: 6px;
   color-scheme: light;
 }
 
+/* Dark theme (neon). The values are written twice on purpose:
+   1) here, following the visitor's system setting unless they chose light;
+   2) below, for when they choose dark with the theme toggle.
+   Keep the two blocks identical. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #06070c;
@@ -72,6 +110,7 @@
   }
 }
 
+/* Same values as above, for the manual dark-mode toggle. */
 :root[data-theme="dark"] {
   --bg: #06070c;
   --surface: #0c0f17;
@@ -102,7 +141,9 @@
   color-scheme: dark;
 }
 
-/* ---------- base ---------- */
+/* ------------------------------------------------------------
+   1. Base
+   ------------------------------------------------------------ */
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-padding-top: calc(var(--bar-h) + 16px); -webkit-text-size-adjust: 100%; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
@@ -129,7 +170,9 @@ svg { display: block; }
 .skip { position: absolute; left: -9999px; top: 8px; z-index: 200; background: var(--ink); color: var(--bg); padding: 8px 12px; border-radius: var(--r); }
 .skip:focus { left: 8px; }
 
-/* ---------- buttons ---------- */
+/* ------------------------------------------------------------
+   2. Buttons and icons
+   ------------------------------------------------------------ */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   height: 42px; padding: 0 18px; border-radius: var(--r);
@@ -161,7 +204,9 @@ svg { display: block; }
   :root:not([data-theme="light"]) .t-dark { display: inline; }
 }
 
-/* ---------- sidebar / top bar ---------- */
+/* ------------------------------------------------------------
+   3. Sidebar (fixed on wide screens, top bar on small screens)
+   ------------------------------------------------------------ */
 .sidebar {
   position: sticky; top: 0; z-index: 50;
   background: var(--surface);
@@ -225,7 +270,9 @@ svg { display: block; }
   .side-updated { margin-top: 12px; font-size: 0.72rem; color: var(--ink-3); }
 }
 
-/* ---------- main column ---------- */
+/* ------------------------------------------------------------
+   4. Main column
+   ------------------------------------------------------------ */
 main { display: block; }
 @media (min-width: 960px) { main { margin-left: var(--side-w); } }
 
@@ -234,7 +281,9 @@ main { display: block; }
 @media (min-width: 1200px) { .intro, .section, .site-footer { padding-left: 64px; padding-right: 64px; } }
 .section > *, .intro > *, .site-footer { max-width: 1040px; }
 
-/* ---------- intro (graph paper) ---------- */
+/* ------------------------------------------------------------
+   5. Intro: graph-paper header and spec sheet
+   ------------------------------------------------------------ */
 .intro {
   padding-top: 40px; padding-bottom: 48px;
   border-bottom: 1px solid var(--line);
@@ -288,7 +337,9 @@ main { display: block; }
   .spec-rows > div { grid-template-columns: 1fr; gap: 2px; }
 }
 
-/* ---------- sections ---------- */
+/* ------------------------------------------------------------
+   6. Section headings
+   ------------------------------------------------------------ */
 .section { padding-top: 56px; padding-bottom: 56px; border-bottom: 1px solid var(--line); }
 @media (min-width: 960px) { .section { padding-top: 72px; padding-bottom: 72px; } }
 .section-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: 28px; }
@@ -300,7 +351,9 @@ main { display: block; }
 .rule { flex: 1; min-width: 24px; height: 1px; background: var(--rule-bg); }
 .sub-head { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); margin: 40px 0 4px; }
 
-/* ---------- skills (element tiles) ---------- */
+/* ------------------------------------------------------------
+   7. Skills (periodic-table-style tiles)
+   ------------------------------------------------------------ */
 .skills { display: grid; gap: 14px; }
 @media (min-width: 1160px) { .skills { grid-template-columns: 1fr 1fr; } }
 .skill {
@@ -326,7 +379,9 @@ main { display: block; }
   .tile .sym { font-size: 1.3rem; }
 }
 
-/* ---------- experience rows ---------- */
+/* ------------------------------------------------------------
+   8. Experience and education
+   ------------------------------------------------------------ */
 .rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule-strong); }
 .row { display: grid; gap: 4px 28px; padding: 20px 0; border-bottom: 1px solid var(--line); }
 @media (min-width: 720px) { .row { grid-template-columns: 170px 1fr; } }
@@ -340,7 +395,9 @@ main { display: block; }
 .bullets li::before { content: ""; position: absolute; left: 1px; top: 0.62em; width: 6px; height: 6px; background: var(--accent); }
 .rows-compact .row { padding: 14px 0; }
 
-/* ---------- research projects ---------- */
+/* ------------------------------------------------------------
+   9. Research projects
+   ------------------------------------------------------------ */
 .projects { border-top: 1px solid var(--rule-strong); }
 .project { display: grid; gap: 8px 28px; padding: 24px 0; border-bottom: 1px solid var(--line); }
 @media (min-width: 720px) { .project { grid-template-columns: 170px 1fr; } }
@@ -352,7 +409,9 @@ main { display: block; }
 .tags { list-style: none; padding: 0; margin: 12px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .tags li { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); border: 1px solid var(--accent); border-radius: 3px; padding: 1px 7px; }
 
-/* ---------- publications (table-like) ---------- */
+/* ------------------------------------------------------------
+   10. Publications (table layout, stacked on phones)
+   ------------------------------------------------------------ */
 .filters { display: flex; gap: 6px; }
 .chip {
   font: 500 0.85rem var(--sans); color: var(--ink-2); cursor: pointer;
@@ -411,7 +470,9 @@ main { display: block; }
   .doi { grid-column: 1 / -1; grid-row: 3; justify-self: start; margin: 4px 0 0; }
 }
 
-/* ---------- talks + awards ---------- */
+/* ------------------------------------------------------------
+   11. Presentations and awards
+   ------------------------------------------------------------ */
 .two-col { display: grid; gap: 48px; }
 @media (min-width: 1240px) { .two-col { grid-template-columns: 1.35fr 1fr; gap: 56px; } }
 .talks, .awards { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule-strong); }
@@ -421,7 +482,9 @@ main { display: block; }
 .awards li { display: grid; grid-template-columns: 92px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 0.95rem; color: var(--ink-2); }
 .awards .yr { font-size: 0.78rem; color: var(--ink-3); padding-top: 2px; }
 
-/* ---------- contact ---------- */
+/* ------------------------------------------------------------
+   12. Contact
+   ------------------------------------------------------------ */
 .contact { background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r); padding: 24px; }
 @media (min-width: 720px) { .contact { padding: 32px; } }
 .contact-lede { font-size: 1.05rem; color: var(--ink-2); margin-bottom: 20px; }
@@ -435,14 +498,20 @@ main { display: block; }
 .contact-link:hover { text-decoration: underline; }
 @media (max-width: 420px) { .contact-rows > div { grid-template-columns: 1fr; gap: 2px; } }
 
-/* ---------- footer ---------- */
+/* ------------------------------------------------------------
+   13. Footer
+   ------------------------------------------------------------ */
 .site-footer {
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
   padding-top: 24px; padding-bottom: 40px; color: var(--ink-3); font-size: 0.82rem;
 }
 .site-footer .mono { font-size: 0.74rem; }
 
-/* ---------- neon accents (dark mode only; these tokens are none/unchanged in light) ---------- */
+/* ------------------------------------------------------------
+   14. Neon glow (dark mode)
+   Uses the neon tokens from section 0; they are "none" or neutral
+   in light mode, so these rules change nothing there.
+   ------------------------------------------------------------ */
 .brand-tile, .btn-primary, .chip.is-active { box-shadow: var(--glow); }
 .spec, .contact, .tile, .kicker { box-shadow: var(--glow-sm); }
 .eyebrow, .kicker, .tile .sym, .side-nav a.is-active, .contact-email, .theme-state { text-shadow: var(--glow-text); }
@@ -459,6 +528,9 @@ main { display: block; }
 .doi:hover { box-shadow: var(--glow); }
 @media (min-width: 960px) { .sidebar { box-shadow: var(--side-glow); } }
 
+/* ------------------------------------------------------------
+   15. Print
+   ------------------------------------------------------------ */
 @media print {
   .sidebar, .filters, .cta-row { display: none !important; }
   main { margin-left: 0 !important; }

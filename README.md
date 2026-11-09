@@ -29,16 +29,19 @@ This repository holds the source for my personal website.
 
 Plain HTML, CSS, and JavaScript: no frameworks and no build step. The site has a light theme and a neon dark theme, works on phones, tablets, and desktops, and is hosted with GitHub Pages.
 
-## Repository contents
+## Repository structure
 
-| File | Purpose |
-|---|---|
-| `index.html` | All page content |
-| `styles.css` | Layout, colors, light and dark themes |
-| `main.js` | Theme toggle, mobile menu, section highlighting, publication numbering and filter |
-| `Sungwon_Yoon_Resume.pdf` | Public resume (contact details limited to email) |
-| `.nojekyll` | Tells GitHub Pages to serve the files as-is |
-| `.gitignore` | Keeps private files (other resumes, drafts, system files) out of the repository |
+```
+.
+├── index.html                  # All page content (single page)
+├── assets/
+│   ├── css/styles.css          # Layout, colors, light and neon dark themes
+│   ├── js/main.js              # Theme toggle, mobile menu, section highlighting, publication filter
+│   └── Sungwon_Yoon_Resume.pdf # Public resume (contact details limited to email)
+├── README.md
+├── .gitignore                  # Keeps private files (other resumes, drafts, system files) out of the repo
+└── .nojekyll                   # Tells GitHub Pages to serve the files as-is
+```
 
 ## Contact
 
@@ -53,12 +56,12 @@ Plain HTML, CSS, and JavaScript: no frameworks and no build step. The site has a
 
 **Add a publication:** in `index.html`, copy one `<li>` inside `<ol class="pubs">`, paste it at the top (newest first), then set `data-year`, set `data-first="true"` if first author, and replace the title, authors, journal line, and DOI link. Update the filter counts (`All 14`, `First-author 6`) and the spec-sheet numbers if needed. Paper numbers are assigned automatically.
 
-**Add a photo:** put `photo.jpg` in this folder and add `<img src="photo.jpg" alt="Sungwon Yoon" width="96" height="96" style="border-radius:50%;margin-bottom:20px">` just above `<p class="eyebrow mono">` in `index.html`.
+**Add a photo:** put `photo.jpg` in `assets/` and add `<img src="assets/photo.jpg" alt="Sungwon Yoon" width="96" height="96" style="border-radius:50%;margin-bottom:20px">` just above `<p class="eyebrow mono">` in `index.html`.
 
-**Add ORCID / LinkedIn:** fill in the commented-out rows in the Contact section of `index.html` and remove the `<!--` and `-->` around them.
+**Add ORCID / LinkedIn:** in the Contact section of `index.html`, replace the links in the commented-out rows and remove the `<!--` and `-->` around them.
 
-**Update the resume:** save a public version (email only, no phone or home address) over `Sungwon_Yoon_Resume.pdf` with the same file name. Other PDFs in this folder are ignored by git on purpose.
+**Update the resume:** save a public version (email only, no phone or home address) over `assets/Sungwon_Yoon_Resume.pdf` with the same file name. Any other PDF in the repo folder is ignored by git on purpose.
 
-**After editing `styles.css`:** bump the version in `<link rel="stylesheet" href="styles.css?v=4">` (v=5, v=6, …) so browsers load the new styles. Also update "Last updated …" in the sidebar when you make changes.
+**After editing `assets/css/styles.css`:** bump the version in `<link rel="stylesheet" href="assets/css/styles.css?v=5">` (v=6, v=7, …) so browsers load the new styles. The stylesheet starts with a table of contents; all colors are tokens in section 0. Also update "Last updated …" in the sidebar when you make changes.
 
-**Publish changes:** `git add .`, `git commit -m "Describe the change"`, `git push`. GitHub Pages updates within a minute or two.
+**Publish changes:** `git add -A`, `git commit -m "Describe the change"`, `git push`. GitHub Pages updates within a minute or two.

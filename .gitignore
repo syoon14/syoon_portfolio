@@ -1,13 +1,13 @@
 # ------------------------------------------------------------
 # Only the website itself is committed:
-#   index.html, styles.css, main.js, Sungwon_Yoon_Resume.pdf,
+#   index.html, assets/ (css, js, public resume),
 #   README.md, .gitignore, .nojekyll
 # Everything below stays on this computer and is never pushed.
 # ------------------------------------------------------------
 
 # Private resumes / CVs: only the public copy (no phone or address) is allowed
 *.pdf
-!Sungwon_Yoon_Resume.pdf
+!assets/Sungwon_Yoon_Resume.pdf
 *.docx
 *.doc
 *.tex
