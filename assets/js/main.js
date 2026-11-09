@@ -1,7 +1,7 @@
 /*
  * Sungwon Yoon, Ph.D. · personal website · behavior
  *
- *  - Theme toggle: switches light/dark and remembers the choice
+ *  - Theme switch (top right): switches light/dark and remembers the choice
  *  - Mobile menu: the sidebar becomes a drop-down below 960px
  *  - Navigation: highlights the section currently on screen
  *  - Publications: fixed numbering and the All / First-author filter
@@ -14,19 +14,27 @@
   var root = document.documentElement;
   var mqDark = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
 
-  /* Theme toggle: flip light/dark and save the choice (see the inline script in index.html). */
+  /* Theme switch: flip light/dark, save the choice (read back by the inline script
+     in index.html), and keep the switch's on/off state correct for screen readers. */
+  var themeSwitch = document.getElementById('theme-switch');
   function currentTheme() {
     var set = root.getAttribute('data-theme');
     if (set) return set;
     return mqDark && mqDark.matches ? 'dark' : 'light';
   }
-  Array.prototype.forEach.call(document.querySelectorAll('.theme-btn'), function (btn) {
-    btn.addEventListener('click', function () {
+  function syncSwitch() {
+    if (themeSwitch) themeSwitch.setAttribute('aria-checked', String(currentTheme() === 'dark'));
+  }
+  if (themeSwitch) {
+    themeSwitch.addEventListener('click', function () {
       var next = currentTheme() === 'dark' ? 'light' : 'dark';
       root.setAttribute('data-theme', next);
       try { localStorage.setItem('theme', next); } catch (e) {}
+      syncSwitch();
     });
-  });
+  }
+  if (mqDark && mqDark.addEventListener) mqDark.addEventListener('change', syncSwitch);
+  syncSwitch();
 
   /* Mobile menu: open/close the sidebar panel; close it after a link is chosen or on Escape. */
   var panel = document.getElementById('side-panel');

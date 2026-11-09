@@ -12,9 +12,9 @@
    Contents
      0. Design tokens (light, then dark)
      1. Base
-     2. Buttons and icons
+     2. Buttons, icons and the theme switch
      3. Sidebar (top bar on small screens)
-     4. Main column
+     4. Main column (centered, max 1040px)
      5. Intro: graph-paper header and spec sheet
      6. Section headings
      7. Skills (element tiles)
@@ -63,6 +63,11 @@
   --glow-2-text: none;
   --side-glow: none;
 
+  /* Theme switch (off = light) */
+  --switch-track: #d5d9e2;
+  --switch-x: 0px;
+  --switch-icon: #e0a106;
+
   /* Typography */
   --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Malgun Gothic", sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
@@ -106,6 +111,9 @@
     --glow-2: 0 0 6px rgba(255, 79, 216, 0.6), 0 0 16px rgba(255, 79, 216, 0.3);
     --glow-2-text: 0 0 6px rgba(255, 79, 216, 0.55), 0 0 14px rgba(255, 79, 216, 0.22);
     --side-glow: 1px 0 0 rgba(34, 227, 255, 0.18), 12px 0 40px -18px rgba(34, 227, 255, 0.35);
+    --switch-track: #22e3ff;
+    --switch-x: 20px;
+    --switch-icon: #06070c;
     color-scheme: dark;
   }
 }
@@ -138,6 +146,9 @@
   --glow-2: 0 0 6px rgba(255, 79, 216, 0.6), 0 0 16px rgba(255, 79, 216, 0.3);
   --glow-2-text: 0 0 6px rgba(255, 79, 216, 0.55), 0 0 14px rgba(255, 79, 216, 0.22);
   --side-glow: 1px 0 0 rgba(34, 227, 255, 0.18), 12px 0 40px -18px rgba(34, 227, 255, 0.35);
+  --switch-track: #22e3ff;
+  --switch-x: 20px;
+  --switch-icon: #06070c;
   color-scheme: dark;
 }
 
@@ -194,15 +205,34 @@ svg { display: block; }
 .icon-btn:hover { color: var(--ink); border-color: var(--line-strong); }
 .icon-btn svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
-.i-moon, .t-dark { display: none; }
-:root[data-theme="dark"] .i-sun, :root[data-theme="dark"] .t-light { display: none; }
+.i-moon { display: none; }
+:root[data-theme="dark"] .i-sun { display: none; }
 :root[data-theme="dark"] .i-moon { display: block; }
-:root[data-theme="dark"] .t-dark { display: inline; }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .i-sun, :root:not([data-theme="light"]) .t-light { display: none; }
+  :root:not([data-theme="light"]) .i-sun { display: none; }
   :root:not([data-theme="light"]) .i-moon { display: block; }
-  :root:not([data-theme="light"]) .t-dark { display: inline; }
 }
+
+/* Theme switch (iOS style). Off = light, on = dark.
+   Pinned in the top bar on small screens, just left of the menu button;
+   in the top-right corner of the page on wide screens. */
+.theme-switch {
+  position: fixed; top: 17px; right: 64px; z-index: 60;
+  width: 46px; height: 26px; padding: 0; border: 0; border-radius: 999px; cursor: pointer;
+  background: var(--switch-track);
+  transition: background-color .2s ease;
+}
+.theme-switch-knob {
+  position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: #fff; color: var(--switch-icon);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), 0 1px 1px rgba(0, 0, 0, 0.08);
+  transform: translateX(var(--switch-x));
+  transition: transform .2s ease;
+}
+.theme-switch-knob svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+@media (min-width: 960px) { .theme-switch { position: absolute; top: 24px; right: 28px; } }
+@media (prefers-reduced-motion: reduce) { .theme-switch, .theme-switch-knob { transition: none; } }
 
 /* ------------------------------------------------------------
    3. Sidebar (fixed on wide screens, top bar on small screens)
@@ -260,13 +290,6 @@ svg { display: block; }
     position: static; box-shadow: none; border: 0; padding: 18px 28px 28px;
   }
   .side-foot { display: block; margin-top: auto; padding-top: 28px; }
-  .theme-row {
-    width: 100%; display: flex; justify-content: space-between; align-items: center;
-    padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r);
-    background: var(--surface-2); color: var(--ink-2); cursor: pointer; font: inherit; font-size: 0.82rem;
-  }
-  .theme-row:hover { border-color: var(--line-strong); color: var(--ink); }
-  .theme-state { color: var(--accent); }
   .side-updated { margin-top: 12px; font-size: 0.72rem; color: var(--ink-3); }
 }
 
@@ -276,10 +299,15 @@ svg { display: block; }
 main { display: block; }
 @media (min-width: 960px) { main { margin-left: var(--side-w); } }
 
-.intro, .section, .site-footer { padding-left: 16px; padding-right: 16px; }
-@media (min-width: 720px) { .intro, .section, .site-footer { padding-left: 40px; padding-right: 40px; } }
-@media (min-width: 1200px) { .intro, .section, .site-footer { padding-left: 64px; padding-right: 64px; } }
-.section > *, .intro > *, .site-footer { max-width: 1040px; }
+/* Side padding of the main column; grows on wider screens. */
+.intro, .section, .site-footer { --pad: 16px; padding-left: var(--pad); padding-right: var(--pad); }
+@media (min-width: 720px) { .intro, .section, .site-footer { --pad: 40px; } }
+@media (min-width: 1200px) { .intro, .section, .site-footer { --pad: 64px; } }
+
+/* Center the content (max 1040px wide) in the space beside the sidebar.
+   "main" raises specificity so section children with their own margin rules stay centered. */
+main :is(.intro, .section) > * { max-width: 1040px; margin-left: auto; margin-right: auto; }
+.site-footer { max-width: calc(1040px + 2 * var(--pad)); margin-left: auto; margin-right: auto; }
 
 /* ------------------------------------------------------------
    5. Intro: graph-paper header and spec sheet
@@ -514,7 +542,7 @@ main { display: block; }
    ------------------------------------------------------------ */
 .brand-tile, .btn-primary, .chip.is-active { box-shadow: var(--glow); }
 .spec, .contact, .tile, .kicker { box-shadow: var(--glow-sm); }
-.eyebrow, .kicker, .tile .sym, .side-nav a.is-active, .contact-email, .theme-state { text-shadow: var(--glow-text); }
+.eyebrow, .kicker, .tile .sym, .side-nav a.is-active, .contact-email { text-shadow: var(--glow-text); }
 .intro h1 { text-shadow: var(--glow-title); }
 .stats dt { color: var(--stat-ink); text-shadow: var(--glow-text); }
 .tile .z { color: var(--accent-2); }
@@ -525,7 +553,7 @@ main { display: block; }
 .project.is-current .project-meta { color: var(--accent-2); text-shadow: var(--glow-2-text); }
 .pubs li[data-first="true"]::before { color: var(--accent-2); text-shadow: var(--glow-2-text); }
 .badge-oral { border-color: var(--accent-2); color: var(--accent-2); text-shadow: var(--glow-2-text); }
-.doi:hover { box-shadow: var(--glow); }
+.doi:hover, .theme-switch { box-shadow: var(--glow); }
 @media (min-width: 960px) { .sidebar { box-shadow: var(--side-glow); } }
 
 /* ------------------------------------------------------------

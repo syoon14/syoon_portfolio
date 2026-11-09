@@ -62,6 +62,6 @@ Plain HTML, CSS, and JavaScript: no frameworks and no build step. The site has a
 
 **Update the resume:** save a public version (email only, no phone or home address) over `assets/Sungwon_Yoon_Resume.pdf` with the same file name. Any other PDF in the repo folder is ignored by git on purpose.
 
-**After editing `assets/css/styles.css`:** bump the version in `<link rel="stylesheet" href="assets/css/styles.css?v=5">` (v=6, v=7, …) so browsers load the new styles. The stylesheet starts with a table of contents; all colors are tokens in section 0. Also update "Last updated …" in the sidebar when you make changes.
+**After editing `assets/css/styles.css`:** bump the version in `<link rel="stylesheet" href="assets/css/styles.css?v=6">` (v=7, v=8, …) so browsers load the new styles. The stylesheet starts with a table of contents; all colors are tokens in section 0. Also update "Last updated …" in the sidebar when you make changes.
 
 **Publish changes:** `git add -A`, `git commit -m "Describe the change"`, `git push`. GitHub Pages updates within a minute or two.
